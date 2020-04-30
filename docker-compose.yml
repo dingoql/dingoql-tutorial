@@ -6,7 +6,7 @@ services:
     ports: 
       - "9000:9000"
     volumes: 
-      - ./h2data:/h2data
+      - ./h2data:/data
     env_file: 
       - variables.env
   dingoapp:
