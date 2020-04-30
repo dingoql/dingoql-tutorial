@@ -1,0 +1,30 @@
+version: '3'
+services:
+  dingows:
+    image: dingoql/dingows:0.0.5
+    container_name: dingows
+    ports: 
+      - "9000:9000"
+    volumes: 
+      - ./h2data:/h2data
+    env_file: 
+      - variables.env
+  dingoapp:
+    image: dingoql/dingoapp:0.0.5
+    container_name: dingoapp
+    ports: 
+      - "3000:3000"
+    env_file: 
+      - variables.env
+    depends_on: 
+      - dingows
+  postgresql:
+    image: postgres:12
+    container_name: dingopostgres
+    volumes: 
+      - ./postgresqldata:/var/lib/postgresql/data
+      - ./sample.sql:/docker-entrypoint-initdb.d/sample.sql
+    env_file: 
+      - variables.env
+    ports: 
+      - "6432:5432"
